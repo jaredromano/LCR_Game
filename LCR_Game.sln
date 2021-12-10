@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{25DE3F6B-10D4-41BC-99FB-8AD4F02FB337}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCR_Game.Modules.ModuleName.Tests", "LCR_Game\Tests\LCR_Game.Modules.ModuleName.Tests\LCR_Game.Modules.ModuleName.Tests.csproj", "{2F5D0B3C-0570-487B-BF72-5F9C74EF3CCD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{006B4CA0-67A2-4497-8B78-A5749CC90087}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCR_Game.Modules.GameModule", "LCR_Game\Modules\LCR_Game.Modules.ModuleName\LCR_Game.Modules.GameModule.csproj", "{F6CA6CDC-88D5-4B7A-A227-5353DA66CB0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCR_Game.Modules.GameModule", "LCR_Game\Modules\LCR_Game.Modules.GameModule\LCR_Game.Modules.GameModule.csproj", "{F6CA6CDC-88D5-4B7A-A227-5353DA66CB0B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{647DA06A-103C-456F-864F-B8FAC91F0B22}"
 EndProject
@@ -27,10 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2F5D0B3C-0570-487B-BF72-5F9C74EF3CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F5D0B3C-0570-487B-BF72-5F9C74EF3CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F5D0B3C-0570-487B-BF72-5F9C74EF3CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F5D0B3C-0570-487B-BF72-5F9C74EF3CCD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F6CA6CDC-88D5-4B7A-A227-5353DA66CB0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F6CA6CDC-88D5-4B7A-A227-5353DA66CB0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6CA6CDC-88D5-4B7A-A227-5353DA66CB0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -56,7 +48,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{2F5D0B3C-0570-487B-BF72-5F9C74EF3CCD} = {25DE3F6B-10D4-41BC-99FB-8AD4F02FB337}
 		{F6CA6CDC-88D5-4B7A-A227-5353DA66CB0B} = {006B4CA0-67A2-4497-8B78-A5749CC90087}
 		{016697B5-15CA-4A67-BA07-3E95392DDEFE} = {647DA06A-103C-456F-864F-B8FAC91F0B22}
 		{30841C17-3D40-4D2D-8CD3-C0107470E6E1} = {647DA06A-103C-456F-864F-B8FAC91F0B22}

@@ -4,7 +4,10 @@ using System.Text;
 
 namespace LCR_Game.Services
 {
-    public enum DiceSide
+    /// <summary>
+    /// An enum containing the sides of the dice for a LCR game
+    /// </summary>
+    public enum LcrDiceSide
     {
         L,
         C,

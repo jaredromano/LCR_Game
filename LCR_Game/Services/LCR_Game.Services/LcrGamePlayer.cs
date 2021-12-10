@@ -4,18 +4,19 @@ using System.Text;
 
 namespace LCR_Game.Services
 {
-    public sealed class Player
+    public sealed class LcrGamePlayer : IGamePlayer
     {
-        public Player(int playerNumber, int chipQuantity)
+        public LcrGamePlayer(int playerId, int chipQuantity)
         {
+            Id = playerId;
             ChipQuantity = chipQuantity;
         }
 
-        public int PlayerNumber { get; set; }
+        public int Id { get; set; }
 
-        public Player PlayerLeft { get; internal set; }
+        public IGamePlayer GamePlayerLeft { get; internal set; }
 
-        public Player PlayerRight { get; internal set; }
+        public IGamePlayer GamePlayerRight { get; internal set; }
 
         public int ChipQuantity { get; private set; }
 

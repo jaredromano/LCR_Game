@@ -15,21 +15,21 @@ namespace LCR_Game.Services
         /// <summary>
         /// The 6 sides of the dice
         /// </summary>
-        public readonly IList<DiceSide> Sides = new List<DiceSide>()
+        public readonly IList<LcrDiceSide> Sides = new List<LcrDiceSide>()
         {
-            DiceSide.L,
-            DiceSide.C,
-            DiceSide.R,
-            DiceSide.Dot,
-            DiceSide.Dot,
-            DiceSide.Dot
+            LcrDiceSide.L,
+            LcrDiceSide.C,
+            LcrDiceSide.R,
+            LcrDiceSide.Dot,
+            LcrDiceSide.Dot,
+            LcrDiceSide.Dot
         };
 
         /// <summary>
         /// Rolls the dice
         /// </summary>
         /// <returns>Randomly generated side of the dice</returns>
-        public DiceSide Roll()
+        public LcrDiceSide Roll()
         {
             var sidesCount = Sides.Count();
             var diceIndex = _random.Next(0, sidesCount);

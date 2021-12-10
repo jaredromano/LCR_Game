@@ -10,18 +10,18 @@ namespace LCR_Game.Services
     public class LcrGame : ILcrGame
     {
         private const int ChipQuantity = 3;
-        private Player _currentPlayer;
+        private LcrGamePlayer _currentLcrGamePlayer;
 
 
         public LcrGame(int players)
         {
-            Players = new HashSet<Player>();
+            Players = new HashSet<LcrGamePlayer>();
             InitializePlayers(players);
         }
 
         public int NumberOfTurns { get; private set; }
-        public HashSet<Player> Players { get; }
-        public Player Winner { get; set; }
+        public HashSet<LcrGamePlayer> Players { get; }
+        public LcrGamePlayer Winner { get; set; }
 
         public Task Play(CancellationToken ct)
         {
@@ -31,8 +31,8 @@ namespace LCR_Game.Services
                     var numberOfPlayersWithChips = Players.Count(p => p.ChipQuantity > 0);
                     while (numberOfPlayersWithChips != 1 || ct.IsCancellationRequested)
                     {
-                        TakeTurn(_currentPlayer);
-                        _currentPlayer = _currentPlayer.PlayerLeft;
+                        TakeTurn(_currentLcrGamePlayer);
+                        _currentLcrGamePlayer = (LcrGamePlayer)_currentLcrGamePlayer.GamePlayerLeft;
                         NumberOfTurns++;
                         numberOfPlayersWithChips = Players.Count(p => p.ChipQuantity > 0);
                     }
@@ -43,74 +43,74 @@ namespace LCR_Game.Services
 
         private void InitializePlayers(int count)
         {
-            for (var i = 0; i < count; i++) InsertPlayer(i, ChipQuantity);
+            for (var i = 1; i <= count; i++) InsertPlayer(i, ChipQuantity);
         }
 
-        private void InsertPlayer(int playerNumber, int chipQuantity)
+        private void InsertPlayer(int playerId, int chipQuantity)
         {
-            Player newNode;
+            LcrGamePlayer newNode;
 
             // If the list is empty, create a single node
-            if (_currentPlayer == null)
+            if (_currentLcrGamePlayer == null)
             {
-                newNode = new Player(playerNumber, chipQuantity);
-                newNode.PlayerRight = newNode.PlayerLeft = newNode;
-                _currentPlayer = newNode;
+                newNode = new LcrGamePlayer(playerId, chipQuantity);
+                newNode.GamePlayerRight = newNode.GamePlayerLeft = newNode;
+                _currentLcrGamePlayer = newNode;
                 Players.Add(newNode);
                 return;
             }
 
             // If list is not empty
             /* Find last node */
-            Player last = _currentPlayer.PlayerLeft;
+            LcrGamePlayer last = (LcrGamePlayer)_currentLcrGamePlayer.GamePlayerLeft;
 
             // Create Node dynamically
-            newNode = new Player(playerNumber, chipQuantity)
+            newNode = new LcrGamePlayer(playerId, chipQuantity)
             {
                 // Start is going to be next of new_node
-                PlayerRight = _currentPlayer,
-                PlayerLeft = last
+                GamePlayerRight = _currentLcrGamePlayer,
+                GamePlayerLeft = last
             };
             Players.Add(newNode);
 
             // Make new node previous of start
-            _currentPlayer.PlayerLeft = newNode;
+            _currentLcrGamePlayer.GamePlayerLeft = newNode;
 
             // Make new node next of old last
-            last.PlayerRight = newNode;
+            last.GamePlayerRight = newNode;
         }
 
-        private void ProcessDice(Player currentPlayer, DiceSide diceSide)
+        private void ProcessDice(LcrGamePlayer currentLcrGamePlayer, LcrDiceSide lcrDiceSide)
         {
-            switch (diceSide)
+            switch (lcrDiceSide)
             {
-                case DiceSide.L:
-                    currentPlayer.RemoveChip();
-                    currentPlayer.PlayerLeft.AddChip();
+                case LcrDiceSide.L:
+                    currentLcrGamePlayer.RemoveChip();
+                    ((LcrGamePlayer)currentLcrGamePlayer.GamePlayerLeft).AddChip();
                     return;
-                case DiceSide.C:
-                    currentPlayer.RemoveChip();
+                case LcrDiceSide.C:
+                    currentLcrGamePlayer.RemoveChip();
                     return;
-                case DiceSide.R:
-                    currentPlayer.RemoveChip();
-                    currentPlayer.PlayerRight.AddChip();
+                case LcrDiceSide.R:
+                    currentLcrGamePlayer.RemoveChip();
+                    ((LcrGamePlayer)currentLcrGamePlayer.GamePlayerLeft).AddChip();
                     return;
-                case DiceSide.Dot:
+                case LcrDiceSide.Dot:
                     return;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(diceSide), diceSide, null);
+                    throw new ArgumentOutOfRangeException(nameof(lcrDiceSide), lcrDiceSide, null);
             }
         }
 
-        private void TakeTurn(Player currentPlayer)
+        private void TakeTurn(LcrGamePlayer currentLcrGamePlayer)
         {
-            if (currentPlayer.ChipQuantity == 0) return;
+            if (currentLcrGamePlayer.ChipQuantity == 0) return;
 
-            for (var i = 0; i < currentPlayer.ChipQuantity; i++)
+            for (var i = 0; i < currentLcrGamePlayer.ChipQuantity; i++)
             {
                 Dice dice = new Dice();
-                DiceSide diceSide = dice.Roll();
-                ProcessDice(currentPlayer, diceSide);
+                LcrDiceSide lcrDiceSide = dice.Roll();
+                ProcessDice(currentLcrGamePlayer, lcrDiceSide);
             }
         }
     }
