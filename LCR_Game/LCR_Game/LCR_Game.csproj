@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>LCR_Game</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Unity" Version="8.1.97" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LCR_Game.Core\LCR_Game.Core.csproj" />
+    <ProjectReference Include="..\Modules\LCR_Game.Modules.ModuleName\LCR_Game.Modules.GameModule.csproj" />
+    <ProjectReference Include="..\Services\LCR_Game.Services.Interfaces\LCR_Game.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\Services\LCR_Game.Services\LCR_Game.Services.csproj" />
+  </ItemGroup>
+</Project>

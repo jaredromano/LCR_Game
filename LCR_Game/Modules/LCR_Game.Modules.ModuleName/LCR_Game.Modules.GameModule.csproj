@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>LCR_Game.Modules.GameModule</AssemblyName>
+    <RootNamespace>LCR_Game.Modules.GameModule</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="DotNetProjects.WpfToolkit.DataVisualization" Version="6.1.91" />
+    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\LCR_Game.Core\LCR_Game.Core.csproj" />
+    <ProjectReference Include="..\..\Services\LCR_Game.Services.Interfaces\LCR_Game.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\..\Services\LCR_Game.Services\LCR_Game.Services.csproj" />
+  </ItemGroup>
+</Project>
