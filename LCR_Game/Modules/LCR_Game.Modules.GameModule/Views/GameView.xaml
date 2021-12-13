@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dvc="[dvc ]clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=DotNetProjects.DataVisualization.Toolkit"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:LCR_Game.Modules.GameModule.Models"
     xmlns:prism="http://prismlibrary.com/"
@@ -18,7 +19,7 @@
             <ColumnDefinition
                 Width="Auto" />
             <ColumnDefinition
-                Width="Auto" />
+                Width="*" />
         </Grid.ColumnDefinitions>
 
         <StackPanel
@@ -81,73 +82,14 @@
                 </Button>
             </StackPanel>
         </StackPanel>
-        <StackPanel
-            Grid.Column="1">
-            <chartingToolkit:Chart
-                Width="Auto"
-                Height="Auto"
-                MinWidth="1200"
-                MinHeight="500"
-                Background="LightSteelBlue">
-                <chartingToolkit:Chart.Series>
-                    <chartingToolkit:LineSeries
-                        Title="Game"
-                        DependentValueBinding="{Binding Path=Value}"
-                        IndependentValueBinding="{Binding Path=Key}"
-                        ItemsSource="{Binding PlotPoints}">
-                        <chartingToolkit:LineSeries.DataPointStyle>
-                            <Style
-                                TargetType="{x:Type chartingToolkit:LineDataPoint}">
-                                <Setter Property="Background" Value="Red" />
-                                <Setter Property="Height" Value="0" />
-                                <Setter Property="Width" Value="0" />
-                            </Style>
-                        </chartingToolkit:LineSeries.DataPointStyle>
-                    </chartingToolkit:LineSeries>
-                    <chartingToolkit:LineSeries
-                        Title="Average"
-                        DependentValueBinding="{Binding Path=Value}"
-                        IndependentValueBinding="{Binding Path=Key}"
-                        ItemsSource="{Binding AveragePlotPoints}">
-                        <chartingToolkit:LineSeries.DataPointStyle>
-                            <Style
-                                TargetType="{x:Type chartingToolkit:LineDataPoint}">
-                                <Setter Property="Background" Value="Green" />
-                                <Setter Property="Height" Value="0" />
-                                <Setter Property="Width" Value="0" />
-                            </Style>
-                        </chartingToolkit:LineSeries.DataPointStyle>
-                    </chartingToolkit:LineSeries>
-                    <chartingToolkit:ScatterSeries
-                        Title="Shortest Games"
-                        DependentValueBinding="{Binding Path=Value}"
-                        IndependentValueBinding="{Binding Path=Key}"
-                        ItemsSource="{Binding MinPlotPoints}">
-                        <chartingToolkit:ScatterSeries.DataPointStyle>
-                            <Style
-                                TargetType="{x:Type chartingToolkit:DataPoint}">
-                                <Setter Property="Background" Value="Purple" />
-                            </Style>
-                        </chartingToolkit:ScatterSeries.DataPointStyle>
-                    </chartingToolkit:ScatterSeries>
-                    <chartingToolkit:ScatterSeries
-                        Title="Longest Games"
-                        DependentValueBinding="{Binding Path=Value}"
-                        IndependentValueBinding="{Binding Path=Key}"
-                        ItemsSource="{Binding MaxPlotPoints}">
-                        <chartingToolkit:ScatterSeries.DataPointStyle>
-                            <Style
-                                TargetType="{x:Type chartingToolkit:DataPoint}">
-                                <Setter Property="Background" Value="Orange" />
-                            </Style>
-                        </chartingToolkit:ScatterSeries.DataPointStyle>
-                    </chartingToolkit:ScatterSeries>
-
-                </chartingToolkit:Chart.Series>
-            </chartingToolkit:Chart>
-
+        <DockPanel
+            Name="SPChart"
+            Grid.Column="1"
+            Margin="15,15">
             <ItemsControl
-                ItemsSource="{Binding Players}">
+                DockPanel.Dock="Bottom"
+                ItemsSource="{Binding Players}"
+                MinHeight="100">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel
@@ -158,23 +100,28 @@
                     <DataTemplate
                         DataType="{x:Type models:Player}">
                         <StackPanel
-                            Orientation="Vertical"
-                            HorizontalAlignment="Center">
-                            <fa:ImageAwesome
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical">
+                            <iconPacks:PackIconFontAwesome
+                                Width="40"
+                                Height="40"
                                 Margin="20"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Icon="User">
-                                <fa:ImageAwesome.Style>
-                                <Style TargetType="{x:Type fa:ImageAwesome}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsWinner}" Value="True">
-                                            <Setter Property="Foreground" Value="OrangeRed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </fa:ImageAwesome.Style>
-                            </fa:ImageAwesome>
+                                Kind="UserAltSolid">
+                                <iconPacks:PackIconFontAwesome.Style>
+                                    <Style
+                                        TargetType="{x:Type iconPacks:PackIconFontAwesome}">
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding IsWinner}"
+                                                Value="True">
+                                                <Setter Property="Foreground" Value="OrangeRed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </iconPacks:PackIconFontAwesome.Style>
+                            </iconPacks:PackIconFontAwesome>
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 Text="{Binding Id}" />
@@ -182,6 +129,70 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </StackPanel>
+            <Border
+                BorderBrush="Black"
+                BorderThickness="1">
+                <chartingToolkit:Chart
+                    Width="Auto"
+                    Height="Auto"
+                    Background="LightSteelBlue">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:LineSeries
+                            Title="Game"
+                            DependentValueBinding="{Binding Path=Value}"
+                            IndependentValueBinding="{Binding Path=Key}"
+                            ItemsSource="{Binding PlotPoints}">
+                            <chartingToolkit:LineSeries.DataPointStyle>
+                                <Style
+                                    TargetType="{x:Type chartingToolkit:LineDataPoint}">
+                                    <Setter Property="Background" Value="Red" />
+                                    <Setter Property="Height" Value="0" />
+                                    <Setter Property="Width" Value="0" />
+                                </Style>
+                            </chartingToolkit:LineSeries.DataPointStyle>
+                        </chartingToolkit:LineSeries>
+                        <chartingToolkit:LineSeries
+                            Title="Average"
+                            DependentValueBinding="{Binding Path=Value}"
+                            IndependentValueBinding="{Binding Path=Key}"
+                            ItemsSource="{Binding AveragePlotPoints}">
+                            <chartingToolkit:LineSeries.DataPointStyle>
+                                <Style
+                                    TargetType="{x:Type chartingToolkit:LineDataPoint}">
+                                    <Setter Property="Background" Value="Green" />
+                                    <Setter Property="Height" Value="0" />
+                                    <Setter Property="Width" Value="0" />
+                                </Style>
+                            </chartingToolkit:LineSeries.DataPointStyle>
+                        </chartingToolkit:LineSeries>
+                        <chartingToolkit:ScatterSeries
+                            Title="Shortest Games"
+                            DependentValueBinding="{Binding Path=Value}"
+                            IndependentValueBinding="{Binding Path=Key}"
+                            ItemsSource="{Binding MinPlotPoints}">
+                            <chartingToolkit:ScatterSeries.DataPointStyle>
+                                <Style
+                                    TargetType="{x:Type chartingToolkit:DataPoint}">
+                                    <Setter Property="Background" Value="Purple" />
+                                </Style>
+                            </chartingToolkit:ScatterSeries.DataPointStyle>
+                        </chartingToolkit:ScatterSeries>
+                        <chartingToolkit:ScatterSeries
+                            Title="Longest Games"
+                            DependentValueBinding="{Binding Path=Value}"
+                            IndependentValueBinding="{Binding Path=Key}"
+                            ItemsSource="{Binding MaxPlotPoints}">
+                            <chartingToolkit:ScatterSeries.DataPointStyle>
+                                <Style
+                                    TargetType="{x:Type chartingToolkit:DataPoint}">
+                                    <Setter Property="Background" Value="Orange" />
+                                </Style>
+                            </chartingToolkit:ScatterSeries.DataPointStyle>
+                        </chartingToolkit:ScatterSeries>
+
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
+            </Border>
+        </DockPanel>
     </Grid>
 </UserControl>

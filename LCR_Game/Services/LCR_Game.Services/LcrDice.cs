@@ -5,12 +5,12 @@ using System.Text;
 
 namespace LCR_Game.Services
 {
-    public sealed class Dice
+    public sealed class LcrDice
     {
         /// <summary>
         /// Random number generator
         /// </summary>
-        private Random _random = new Random();
+        private readonly Random _random = new Random();
 
         /// <summary>
         /// The 6 sides of the dice

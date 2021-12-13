@@ -20,7 +20,6 @@ namespace LCR_Game
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<ILcrGame, LcrGame>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

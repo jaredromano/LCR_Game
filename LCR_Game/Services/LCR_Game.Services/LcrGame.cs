@@ -108,8 +108,8 @@ namespace LCR_Game.Services
 
             for (var i = 0; i < currentLcrGamePlayer.ChipQuantity; i++)
             {
-                Dice dice = new Dice();
-                LcrDiceSide lcrDiceSide = dice.Roll();
+                LcrDice lcrDice = new LcrDice();
+                LcrDiceSide lcrDiceSide = lcrDice.Roll();
                 ProcessDice(currentLcrGamePlayer, lcrDiceSide);
             }
         }

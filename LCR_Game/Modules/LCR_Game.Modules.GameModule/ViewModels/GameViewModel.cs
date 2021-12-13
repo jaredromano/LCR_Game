@@ -162,6 +162,35 @@ namespace LCR_Game.Modules.GameModule.ViewModels
             //not implemented
         }
 
+        private ObservableCollection<KeyValuePair<int, int>> CalculateAveragePlotPoints()
+        {
+            var average = (int)PlotPoints.Select(p => p.Value).Average();
+            // var averagePlotPoints = Enumerable.Range(0, numberOfGames)
+            //     .Select(x => new KeyValuePair<int, int>(x, average));
+
+            var averagePlotPoints = new List<KeyValuePair<int, int>>
+            {
+                new(0, average),
+                new(PlotPoints.Count() - 1, average)
+            };
+
+            return new ObservableCollection<KeyValuePair<int, int>>(averagePlotPoints);
+        }
+
+        private ObservableCollection<KeyValuePair<int, int>> CalculateMaxPlotPoints()
+        {
+            var max = PlotPoints.Select(p => p.Value).Max();
+            var maxPlotPoints = PlotPoints.Where(p => p.Value == max);
+            return new ObservableCollection<KeyValuePair<int, int>>(maxPlotPoints);
+        }
+
+        private ObservableCollection<KeyValuePair<int, int>> CalculateMinPlotPoints()
+        {
+            var min = PlotPoints.Select(p => p.Value).Min();
+            var minPlotPoints = PlotPoints.Where(p => p.Value == min);
+            return new ObservableCollection<KeyValuePair<int, int>>(minPlotPoints);
+        }
+
         /// <summary>
         ///     Indicates if the Cancel button can be pressed
         /// </summary>
@@ -210,31 +239,33 @@ namespace LCR_Game.Modules.GameModule.ViewModels
         /// </summary>
         private async Task PlayGames(int numberOfPlayers, int numberOfGames, CancellationToken ct)
         {
+            // Create players
             var players = Enumerable.Range(1, numberOfPlayers).Select(i => new Player(i));
             Players = new ObservableCollection<Player>(players);
 
+            // Clear out previous game data
+            AveragePlotPoints = new ObservableCollection<KeyValuePair<int, int>>();
+            MaxPlotPoints = new ObservableCollection<KeyValuePair<int, int>>();
+            MinPlotPoints = new ObservableCollection<KeyValuePair<int, int>>();
+
+            // Play through games
             for (var i = 0; i < numberOfGames; i++)
             {
                 LcrGame game = new(numberOfPlayers);
                 await game.Play(ct);
                 PlotPoints.Add(new KeyValuePair<int, int>(i, game.NumberOfTurns));
+                AveragePlotPoints = CalculateAveragePlotPoints();
                 Player winner = Players.First(p => p.Id == game.Winner.Id);
                 winner.NumberOfWins++;
             }
 
-            var average = (int)PlotPoints.Select(p => p.Value).Average();
-            var averagePlotPoints = Enumerable.Range(0, numberOfGames)
-                .Select(x => new KeyValuePair<int, int>(x, average));
-            AveragePlotPoints = new ObservableCollection<KeyValuePair<int, int>>(averagePlotPoints);
+            MaxPlotPoints = CalculateMaxPlotPoints();
+            MinPlotPoints = CalculateMinPlotPoints();
+            SetWinner();
+        }
 
-            var max = PlotPoints.Select(p => p.Value).Max();
-            var maxPlotPoints = PlotPoints.Where(p => p.Value == max);
-            MaxPlotPoints = new ObservableCollection<KeyValuePair<int, int>>(maxPlotPoints);
-
-            var min = PlotPoints.Select(p => p.Value).Min();
-            var minPlotPoints = PlotPoints.Where(p => p.Value == min);
-            MinPlotPoints = new ObservableCollection<KeyValuePair<int, int>>(minPlotPoints);
-
+        private void SetWinner()
+        {
             var winningScore = Players.Max(p => p.NumberOfWins);
             Player overallWinner = Players.First(p => p.NumberOfWins == winningScore);
             overallWinner.IsWinner = true;

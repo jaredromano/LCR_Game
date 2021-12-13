@@ -10,7 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LCR_Game.Core\LCR_Game.Core.csproj" />
-    <ProjectReference Include="..\Modules\LCR_Game.Modules.ModuleName\LCR_Game.Modules.GameModule.csproj" />
+    <ProjectReference Include="..\Modules\LCR_Game.Modules.GameModule\LCR_Game.Modules.GameModule.csproj" />
     <ProjectReference Include="..\Services\LCR_Game.Services.Interfaces\LCR_Game.Services.Interfaces.csproj" />
     <ProjectReference Include="..\Services\LCR_Game.Services\LCR_Game.Services.csproj" />
   </ItemGroup>
